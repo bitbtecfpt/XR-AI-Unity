@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _obscurePassword = true; // Biến trạng thái để điều khiển hiển thị mật khẩu
-
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email cannot be empty';
@@ -109,8 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
+                      enabled: true,
                       controller: _emailController,
-                      obscureText: false,
                       decoration: InputDecoration(
                         hintText: "Enter your email",
                         border: OutlineInputBorder(
@@ -119,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       validator: _validateEmail,
                     ),
-                    const SizedBox(height: 20),
                     // Password Input
                     const Text(
                       "Password",
