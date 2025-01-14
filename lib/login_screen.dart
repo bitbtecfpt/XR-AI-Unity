@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,7 +17,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obscurePassword = true; // Biến trạng thái để điều khiển hiển thị mật khẩu
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +72,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    obscureText: true,
                     decoration: InputDecoration(
                       hintText: "Enter your email",
                       border: OutlineInputBorder(
@@ -83,13 +90,22 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    obscureText: true,
+                    obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       hintText: "Enter your password",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      suffixIcon: Icon(Icons.visibility_off),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword; // Đổi trạng thái
+                          });
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
