@@ -27,16 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isConfirmPasswordObscure = true;
   final _emailController = TextEditingController();
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email cannot be empty';
-    }
-    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-    if (!emailRegex.hasMatch(value)) {
-      return 'Invalid email format';
-    }
-    return null;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +115,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              validator: _validateEmail,
                             ),
                             const SizedBox(height: 20),
                             // Password Input

@@ -1,0 +1,17 @@
+cấu trúc chung của dự án
+lib/
+├── main.dart          # Điểm bắt đầu của ứng dụng
+├── core/              # Các thành phần dùng chung
+│   ├── utils/         # Các hàm tiện ích
+│   ├── constants/     # Các hằng số, keys, routes
+│   ├── services/      # Các lớp phục vụ, API
+│   └── theme/         # Định nghĩa chủ đề (theme)
+├── data/              # Tầng dữ liệu
+│   ├── models/        # Các lớp model
+│   ├── repositories/  # Repository quản lý dữ liệu
+│   └── providers/     # Các provider (nếu dùng)
+├── presentation/      # Tầng giao diện
+│   ├── screens/       # Các màn hình (screen)
+│   ├── widgets/       # Các widget chung
+│   └── navigation/    # Điều hướng (routing)
+└── app.dart           # File cấu hình ứng dụng (MaterialApp, routes...)
