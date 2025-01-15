@@ -108,7 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
-                      enabled: true,
+                      obscureText: false,
+
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: "Enter your email",
