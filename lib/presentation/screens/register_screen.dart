@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'utils/email_validator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,20 +26,58 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordObscure = true;
   bool _isConfirmPasswordObscure = true;
+
   final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
+  String _validationMessage = '';
 
+  bool _isFormValid() {
+    final email = _emailController.text.trim();
+    final name = _nameController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    if (name.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
+      setState(() {
+        _validationMessage = 'Vui lòng điền đầy đủ các trường.';
+      });
+      return false;
+    }
+
+    if (!EmailValidator.isValidEmail(email)) {
+      setState(() {
+        _validationMessage = 'Email không hợp lệ.';
+      });
+      return false;
+    }
+
+    if (password != confirmPassword) {
+      setState(() {
+        _validationMessage = 'Mật khẩu xác nhận không khớp.';
+      });
+      return false;
+    }
+
+    setState(() {
+      _validationMessage = '';
+    });
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      resizeToAvoidBottomInset: true,
       resizeToAvoidBottomInset: true, // Đẩy nội dung lên khi bàn phím mở
-      backgroundColor: Colors.orange.shade400,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              reverse: true, // Đẩy nội dung cuộn để Container dính vào bàn phím
+
+              reverse: true,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
@@ -76,7 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min, // Giữ kích thước vừa đủ
+                          mainAxisSize: MainAxisSize.min,
+
                           children: [
                             // Name Input
                             const Text(
@@ -88,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             const SizedBox(height: 8),
                             TextField(
-                              obscureText: true,
+                              controller: _nameController,
+
                               decoration: InputDecoration(
                                 hintText: "Your Name, e.g : John Doe",
                                 border: OutlineInputBorder(
@@ -107,7 +148,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             const SizedBox(height: 8),
                             TextField(
-                              obscureText: true,
                               controller: _emailController,
                               decoration: InputDecoration(
                                 hintText: "Your email, e.g : johndoe@gmail.com",
@@ -127,7 +167,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             const SizedBox(height: 8),
                             TextField(
-                              obscureText: _isPasswordObscure,  // Đặt theo trạng thái
+                              controller: _passwordController,
+                              obscureText: _isPasswordObscure,
+
                               decoration: InputDecoration(
                                 hintText: "Your password, at least 8 characters.",
                                 border: OutlineInputBorder(
@@ -141,7 +183,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      _isPasswordObscure = !_isPasswordObscure;  // Đổi trạng thái
+                                      _isPasswordObscure = !_isPasswordObscure;
+
                                     });
                                   },
                                 ),
@@ -158,7 +201,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             const SizedBox(height: 8),
                             TextField(
-                              obscureText: _isConfirmPasswordObscure,  // Đặt theo trạng thái
+                              controller: _confirmPasswordController,
+                              obscureText: _isConfirmPasswordObscure,
+
                               decoration: InputDecoration(
                                 hintText: "Confirm your password",
                                 border: OutlineInputBorder(
@@ -172,7 +217,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      _isConfirmPasswordObscure = !_isConfirmPasswordObscure;  // Đổi trạng thái
+                                      _isConfirmPasswordObscure =
+                                      !_isConfirmPasswordObscure;
+
                                     });
                                   },
                                 ),
@@ -184,11 +231,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  // Chuyển đến màn LoginScreen
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                                  );
+                                  if (_isFormValid()) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                    );
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange,
@@ -204,24 +253,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            // Login Link
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Don't have an account yet? "),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    "Login here",
-                                    style: TextStyle(
-                                      color: Colors.orange,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              _validationMessage,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                              ),
                             ),
                           ],
                         ),

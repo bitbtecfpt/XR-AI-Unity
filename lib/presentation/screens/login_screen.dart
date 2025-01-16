@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_screen.dart';
+import 'Select_option.dart';
 
 void main() {
   runApp(const MyApp());
@@ -109,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 8),
                     TextFormField(
                       obscureText: false,
-
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: "Enter your email",
@@ -163,10 +163,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     // Login Button
+                    // Login Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _handleLogin,
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() == true) {
+                            // Nếu tất cả các trường hợp lệ, thực hiện hành động login
+                            _handleLogin();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChooseOptions(),
+                              ),
+                            );
+                          } else {
+                            // Nếu không hợp lệ, hiển thị cảnh báo
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please enter valid email and password')),
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
                           padding: const EdgeInsets.symmetric(vertical: 15),
