@@ -7,7 +7,6 @@ lib/
 │   ├── services/      # Các lớp phục vụ, API
 │   └── theme/         # Định nghĩa chủ đề (theme)
 ├── data/              # Tầng dữ liệu
-
 │   ├── models/        # Các lớp model
 │   ├── repositories/  # Repository quản lý dữ liệu
 │   └── providers/     # Các provider (nếu dùng)

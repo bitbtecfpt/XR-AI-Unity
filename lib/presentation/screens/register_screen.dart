@@ -73,12 +73,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.orange.shade400,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
+      resizeToAvoidBottomInset: true, // Đẩy nội dung lên khi bàn phím mở
+
               reverse: true,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -118,6 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
+
                           children: [
                             // Name Input
                             const Text(
@@ -130,6 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 8),
                             TextField(
                               controller: _nameController,
+
                               decoration: InputDecoration(
                                 hintText: "Your Name, e.g : John Doe",
                                 border: OutlineInputBorder(
@@ -169,6 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             TextField(
                               controller: _passwordController,
                               obscureText: _isPasswordObscure,
+
                               decoration: InputDecoration(
                                 hintText: "Your password, at least 8 characters.",
                                 border: OutlineInputBorder(
@@ -183,6 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onPressed: () {
                                     setState(() {
                                       _isPasswordObscure = !_isPasswordObscure;
+
                                     });
                                   },
                                 ),
@@ -201,6 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             TextField(
                               controller: _confirmPasswordController,
                               obscureText: _isConfirmPasswordObscure,
+
                               decoration: InputDecoration(
                                 hintText: "Confirm your password",
                                 border: OutlineInputBorder(
@@ -216,6 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     setState(() {
                                       _isConfirmPasswordObscure =
                                       !_isConfirmPasswordObscure;
+
                                     });
                                   },
                                 ),

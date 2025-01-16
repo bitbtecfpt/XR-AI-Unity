@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'register_screen.dart';
 import 'Select_option.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -196,8 +197,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
-
                     const SizedBox(height: 10),
                     // Register Link
                     Row(
