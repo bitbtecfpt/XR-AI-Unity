@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'utils/listMethod.dart';
 import 'utils/drawCircle.dart';
+import 'topic_information.dart';
 
 void main() {
   runApp(const MyApp());
@@ -80,15 +81,15 @@ class ChooseOptions extends StatelessWidget {
                   children: [
                     listMethod(context,
                         title: 'Present',
-                        destination: DetailScreen(item: 'Present')),
+                        destination: TopicInfoFormScreen(item: 'Present')),
                     Divider(color: Colors.blueAccent, thickness: 1),
                     listMethod(context,
                         title: 'Meeting',
-                        destination: DetailScreen(item: 'Meeting')),
+                        destination: TopicInfoFormScreen(item: 'Meeting')),
                     Divider(color: Colors.blueAccent, thickness: 1),
                     listMethod(context,
                         title: 'Interview',
-                        destination: DetailScreen(item: "Interview")),
+                        destination: TopicInfoFormScreen(item: "Interview")),
                   ],
                 ),
               ),
@@ -98,21 +99,5 @@ class ChooseOptions extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final String item;
-
-  const DetailScreen({required this.item});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text(item)),
-        body: Center(
-          child: Text("This is the detail screen for $item.",
-              style: TextStyle(fontSize: 18)),
-        ));
   }
 }

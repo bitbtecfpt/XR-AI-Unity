@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class TopicInfoFormScreen extends StatelessWidget {
-  const TopicInfoFormScreen({Key? key}) : super(key: key);
+class TopicInfoFormScreen extends StatefulWidget {
+  const TopicInfoFormScreen({super.key, required String item});
+
+  @override
+  _TopicInfoFormScreenState createState() => _TopicInfoFormScreenState();
+}
+
+class _TopicInfoFormScreenState extends State<TopicInfoFormScreen> {
+  File? _selectedImage;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _selectedImage = File(image.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +60,8 @@ class TopicInfoFormScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: _buildDropdownField("Experience Year", ["1 đến 3", "3 đến 5", "5 đến 7", "7 đến 12","trên 12 "]),
+                          child: _buildDropdownField("Experience Year",
+                              ["1 to 3", "3 to 5", "5 to 7", "7 to 12", "over 12"]),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -50,26 +70,38 @@ class TopicInfoFormScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    _buildTextField("Skills", "input..."),
+                    _buildTextField("Skills", "Input your skills...", minLines: 1, maxLines: null),
+                    const SizedBox(height: 16),
+                    // Thêm input cho Job Description
+                    _buildTextField("Job Description", "Describe the job...", minLines: 3, maxLines: 5),
                     const SizedBox(height: 16),
                     const Text(
-                      "Upload files CV",
+                      "Upload an Image",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(Icons.upload_file, size: 30, color: Colors.grey),
-                            Text("Browse", style: TextStyle(color: Colors.grey)),
-                          ],
+                    GestureDetector(
+                      onTap: _pickImage,
+                      child: Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: _selectedImage == null
+                              ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_photo_alternate, size: 30, color: Colors.grey),
+                              Text("Select Image", style: TextStyle(color: Colors.grey)),
+                            ],
+                          )
+                              : Image.file(
+                            _selectedImage!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                         ),
                       ),
                     ),
@@ -88,7 +120,13 @@ class TopicInfoFormScreen extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_selectedImage != null) {
+                        print("Image selected: ${_selectedImage!.path}");
+                      } else {
+                        print("No image selected");
+                      }
+                    },
                     child: const Text("Start"),
                   ),
                 ),
@@ -100,7 +138,7 @@ class TopicInfoFormScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String label, String hint) {
+  Widget _buildTextField(String label, String hint, {int minLines = 1, int? maxLines = 1}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,6 +151,8 @@ class TopicInfoFormScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
+          minLines: minLines,
+          maxLines: maxLines,
         ),
       ],
     );
@@ -142,4 +182,3 @@ class TopicInfoFormScreen extends StatelessWidget {
     );
   }
 }
-
