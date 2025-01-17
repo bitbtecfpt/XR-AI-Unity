@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TopicInfoFormScreen extends StatelessWidget {
-  const TopicInfoFormScreen({Key? key}) : super(key: key);
+  const TopicInfoFormScreen({Key? key, required String item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class TopicInfoFormScreen extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: _buildDropdownField("Experience Year", ["1 đến 3", "3 đến 5", "5 đến 7", "7 đến 12","trên 12 "]),
+                          child: _buildDropdownField("Experience Year", ["1 to 3", "3 to 5", "5 to 7", "7 to 12","over 12"]),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
